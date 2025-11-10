@@ -19,7 +19,26 @@
   gap: 1.5rem;
 }
 
-/* 📱 Mobile responsiveness */
+.editIcons{
+  position: absolute;
+  z-index: 99999;
+  padding: 0.2rem;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.sign{
+  display: flex;
+  margin: 0 auto;
+  height: 100%;
+  width: 5rem;
+}
+
+.addBlog{
+  background-color: rgb(128, 220, 254);
+  height: 22rem;
+}
+
 @media (max-width: 1024px) {
   .mainContent {
     padding: 2rem 3rem;

@@ -1,8 +1,8 @@
 .eventBox {
   position: fixed;
-  bottom: 4.1rem;
-  right: 2rem;
-  width: 300px; /* slimmer for blog */
+  bottom: 1.5rem;
+  right: 1rem;
+  width: 280px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -25,7 +25,6 @@
   max-height: 600px;
 }
 
-/* Close button */
 .closeBtn {
   position: absolute;
   top: 10px;
@@ -37,7 +36,6 @@
   color: #555;
 }
 
-/* Event image + content */
 .eventImage {
   width: 100%;
   height: 130px; /* reduced */
@@ -64,7 +62,6 @@
   line-height: 1.4;
 }
 
-/* Buttons */
 .bookBtn {
   margin-top: 0.5rem;
   padding: 0.4rem 0.6rem;
@@ -82,7 +79,6 @@
   background: #346ae3;
 }
 
-/* See More Button */
 .seeMoreBtn {
   display: flex;
   justify-content: center;
