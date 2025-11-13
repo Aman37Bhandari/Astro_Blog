@@ -20,7 +20,7 @@ export function Navbar() {
                     <a href="#">Home</a>
                     <a href="#">About</a>
                     <a href="#">Services</a>
-                    <a href="#">Login</a>
+                    <a href="https://astrostops.com/auth/login">Login</a>
                 </div>
         </div>
         </>
