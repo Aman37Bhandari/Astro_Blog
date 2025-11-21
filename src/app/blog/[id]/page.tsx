@@ -114,45 +114,34 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
     }
   };
 
-  const imageHandler = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
+ const imageHandler = () => {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
 
-    input.onchange = () => {
-      const file = input.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const imageUrl = e.target?.result as string;
-          
-          const quillEditor = document.querySelector(".ql-editor");
-          if (quillEditor) {
-            const img = document.createElement("img");
-            img.src = imageUrl;
-            img.style.width = "100%";
-            img.style.maxHeight = "450px";
-            img.style.objectFit = "cover";
-            img.style.height = "auto";
-            img.style.display = "block";
-            img.style.margin = "1rem 0";
-            img.style.border = "1px solid #eee";
-            img.style.borderRadius = "10px";
-            
-            const range = (window as any).quillInstance?.getSelection();
-            if (range) {
-              (window as any).quillInstance?.clipboard.dangerouslyPasteHTML(
-                range.index,
-                img.outerHTML
-              );
-            }
+  input.onchange = () => {
+    const file = input.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target?.result as string;
+        
+        const imgHtml = `<img src="${imageUrl}" alt="Image"/>`;
+        
+        const quillInstance = (window as any).quillInstance;
+        if (quillInstance) {
+          const range = quillInstance.getSelection();
+          if (range) {
+            quillInstance.clipboard.dangerouslyPasteHTML(range.index, imgHtml);
+            quillInstance.setSelection(range.index + 1);
           }
-        };
-        reader.readAsDataURL(file);
-      }
-    };
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
+};
 
   const quillModules = {
     toolbar: {
