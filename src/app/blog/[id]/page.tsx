@@ -11,6 +11,10 @@ import ImageSlider from "@/app/Components/Imgslider/ImgSlider";
 import styles from "./detail.module.css";
 import { FaFacebookF, FaLinkedinIn, FaInstagram, FaLink } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import dynamic from "next/dynamic";
+import "react-quill-new/dist/quill.snow.css";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 function getPost(id: string) {
   return cardsData.find((p) => p.id === parseInt(id, 10));
@@ -85,15 +89,119 @@ function ShareButtons({ post }: { post: any }) {
 
 export default function BlogDetailPage({ params }: { params: { id: string } }) {
   const post = getPost(params.id);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [editedContent, setEditedContent] = useState("");
+  const [savedMessage, setSavedMessage] = useState("");
+
+  useEffect(() => {
+    if (post) {
+      setEditedContent(post.content);
+    }
+  }, [post]);
+
   if (!post) notFound();
 
   const currentIndex = cardsData.findIndex((p) => p.id === post!.id);
   const prevPost = currentIndex > 0 ? cardsData[currentIndex - 1] : null;
   const nextPost = currentIndex < cardsData.length - 1 ? cardsData[currentIndex + 1] : null;
 
+  const handleSave = () => {
+    const postToUpdate = cardsData.find((p) => p.id === post.id);
+    if (postToUpdate) {
+      postToUpdate.content = editedContent;
+      setSavedMessage("Content saved successfully!");
+      setTimeout(() => setSavedMessage(""), 3000);
+    }
+  };
+
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = () => {
+      const file = input.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageUrl = e.target?.result as string;
+          
+          const quillEditor = document.querySelector(".ql-editor");
+          if (quillEditor) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.style.width = "100%";
+            img.style.maxHeight = "450px";
+            img.style.objectFit = "cover";
+            img.style.height = "auto";
+            img.style.display = "block";
+            img.style.margin = "1rem 0";
+            img.style.border = "1px solid #eee";
+            img.style.borderRadius = "10px";
+            
+            const range = (window as any).quillInstance?.getSelection();
+            if (range) {
+              (window as any).quillInstance?.clipboard.dangerouslyPasteHTML(
+                range.index,
+                img.outerHTML
+              );
+            }
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  };
+
+  const quillModules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ color: [] }, { background: [] }],
+        [{ align: [] }],
+        ["link", "image"],
+        ["clean"],
+      ],
+      handlers: {
+        image: imageHandler,
+      },
+    },
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <Navbar />
+      
+      <div className={styles.admin_btn_contain}>
+        <button
+          className={styles.admin_btn}
+          onClick={() => setIsAdmin(!isAdmin)}
+          style={{
+            backgroundColor: isAdmin ? "#ef4444" : "#0d4fd3",
+          }}
+        >
+          {isAdmin ? "Exit Admin Mode" : "Enter Admin Mode"}
+        </button>
+        
+        {isAdmin && (
+          <button
+            onClick={handleSave}
+            className={styles.save_btn}
+          >
+            Save Changes
+          </button>
+        )}
+        
+        {savedMessage && (
+          <span className={styles.saved_message}>
+            {savedMessage}
+          </span>
+        )}
+      </div>
+
       <main className={styles.mainContent}>
         <article className={styles.blogArticle}>
           <header className={styles.header}>
@@ -130,16 +238,26 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
             <img src={post.imageUrl} alt={post.title} className={styles.mainImage} />
           )}
 
-          <div className={styles.content}>
-            {post.content.map((block, index) => {
-              if (block.type === "paragraph") {
-                return <p key={index}>{block.text}</p>;
-              } else if (block.type === "image") {
-                return <img key={index} src={block.src} alt={block.alt} className={styles.inlineImage} />;
-              }
-              return null;
-            })}
-          </div>
+          {isAdmin ? (
+            <div style={{ marginBottom: "2rem" }}>
+              <ReactQuill
+                theme="snow"
+                value={editedContent}
+                onChange={setEditedContent}
+                modules={quillModules}
+                style={{ 
+                  backgroundColor: "white",
+                  borderRadius: "8px",
+                  minHeight: "400px"
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: editedContent }}
+            />
+          )}
 
           <div className={styles.updatedAt}>Last updated - 20/20/2020</div>
 
