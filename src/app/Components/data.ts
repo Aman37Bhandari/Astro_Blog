@@ -9,10 +9,9 @@ export interface CardData {
   category: string;
   title: string;
   description: string;
-  content: string; // now HTML for Quill
+  content: string;
   author: {
     name: string;
-    role: string;
     avatarUrl: string;
   };
   date: string;
@@ -56,7 +55,6 @@ export const cardsData: CardData[] = [
 
     author: {
       name: "Jane Doe",
-      role: "Lead Developer",
       avatarUrl: "https://i.pravatar.cc/150?img=1",
     },
     date: "Sep 10, 2025",
@@ -75,7 +73,6 @@ export const cardsData: CardData[] = [
     `,
     author: {
       name: "John Smith",
-      role: "Senior Engineer",
       avatarUrl: "https://i.pravatar.cc/150?img=2",
     },
     date: "Sep 12, 2025",
@@ -94,7 +91,6 @@ export const cardsData: CardData[] = [
     `,
     author: {
       name: "John Smith",
-      role: "Senior Engineer",
       avatarUrl:
         "https://i.pravatar.cc/150?img=2",
     },
@@ -114,7 +110,6 @@ export const cardsData: CardData[] = [
     `,
     author: {
       name: "John Smith",
-      role: "Senior Engineer",
       avatarUrl:
         "https://i.pinimg.com/736x/4c/02/bf/4c02bff3445d2d5ed9c86cd112f88918.jpg",
     },
@@ -134,7 +129,6 @@ export const cardsData: CardData[] = [
     `,
     author: {
       name: "Alice Green",
-      role: "AI Researcher",
       avatarUrl: "https://i.pravatar.cc/150?img=11",
     },
     date: "Oct 01, 2025",
@@ -152,7 +146,6 @@ export const cardsData: CardData[] = [
     `,
     author: {
       name: "David Clark",
-      role: "Security Analyst",
       avatarUrl: "https://i.pravatar.cc/150?img=12",
     },
     date: "Oct 02, 2025",

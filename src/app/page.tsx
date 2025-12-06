@@ -6,6 +6,7 @@ import { Trash, Edit, Plus, Check, X } from "lucide-react";
 import { Navbar } from "./Components/navbar/navbar";
 import { Card } from "./Components/cards/cards";
 import { cardsData, CardData } from "./Components/data";
+import EditModal from "./Admin/Edit-Model/edit_card";
 import Link from "next/link";
 import TopStoriesTicker from "./Components/topStories/TopStories";
 import Filters from "./Components/Filter/Filter";
@@ -27,6 +28,14 @@ export default function Home() {
     return matchesSearch && matchesCategory;
   });
 
+  const [editCard, setEditCard] = useState<CardData | null>(null);
+
+const handleUpdateCard = (updatedCard: CardData) => {
+  setAllCards(prev =>
+    prev.map(c => (c.id === updatedCard.id ? updatedCard : c))
+  );
+  setEditCard(null);
+};
 
   const handleTrashClick = (id: number) => setConfirmDeleteId(id);
   const handleCancelDelete = () => setConfirmDeleteId(null);
@@ -78,7 +87,7 @@ export default function Home() {
                     <>
                       <Edit
                         size={22}
-                        onClick={() => alert(`Edit card: ${card.title}`)}
+                        onClick={() => setEditCard(card)}
                       />
                       <Trash
                         size={22}
@@ -101,6 +110,15 @@ export default function Home() {
             <Plus className={styles.sign} strokeWidth={3} />
           </div>
         </div>
+        {editCard && (
+  <EditModal
+    card={editCard}
+    categories={categories}
+    onSave={handleUpdateCard}
+    onClose={() => setEditCard(null)}
+  />
+)}
+
       </main>
     </div>
   );

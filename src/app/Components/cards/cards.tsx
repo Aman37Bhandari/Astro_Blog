@@ -18,7 +18,7 @@ const Card = ({ card, onCategoryClick }: CardProps) => {
   };
 
   const handleCategoryClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // prevent navigating if wrapped in <Link>
+    e.preventDefault();
     if (onCategoryClick) onCategoryClick(category);
   };
 
