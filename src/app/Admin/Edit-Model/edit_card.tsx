@@ -41,9 +41,9 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2>Edit Card</h2>
+        <h2 className={styles.modalTitle}>Edit Card</h2>
 
-        <label>Category</label>
+        <label className={styles.label}>Category</label>
         <select
           className={styles.formField}
           value={form.category}
@@ -54,7 +54,7 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
           ))}
         </select>
 
-        <label>Editor Name</label>
+        <label className={styles.label}>Editor Name</label>
         <select
           className={styles.formField}
           value={form.author.name}
@@ -66,7 +66,7 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
           <option>astrostops</option>
         </select>
 
-        <label>Date</label>
+        <label className={styles.label}>Date</label>
         <input
           className={styles.formField}
           type="date"
@@ -74,7 +74,7 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
           onChange={(e) => updateField("date", e.target.value)}
         />
 
-        <label>Heading</label>
+        <label className={styles.label}>Heading</label>
         <input
         className={styles.formField}
           type="text"
@@ -82,14 +82,14 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
           onChange={(e) => updateField("title", e.target.value)}
         />
 
-        <label>Description</label>
+        <label className={styles.label}>Description</label>
         <textarea
         className={styles.formField}
           value={form.description}
           onChange={(e) => updateField("description", e.target.value)}
         />
 
-        <label>Front Image URL</label>
+        <label className={styles.label}>Front Image URL</label>
         <input
         className={styles.formField}
           type="text"
@@ -97,7 +97,7 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
           onChange={(e) => updateField("imageUrl", e.target.value)}
         />
 
-        <label>Slider Images</label>
+        <label className={styles.label}>Slider Images</label>
 
 {(form.sliderImages ?? []).map((img, i) => (
   <div key={i} className={styles.sliderItem}>
@@ -142,7 +142,7 @@ const EditModal: React.FC<Props> = ({ card, categories, onSave, onClose }) => {
 
         <div className={styles.actions}>
           <button className={styles.saveBtn} onClick={handleSave}>Save</button>
-          <button className={styles.closeBtn} onClick={onClose}>Cancel</button>
+          <button className={styles.closeBtn} onClick={onClose}>❌</button>
         </div>
       </div>
     </div>

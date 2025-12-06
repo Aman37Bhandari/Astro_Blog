@@ -17,6 +17,20 @@
   max-height: 92vh;
   overflow-y: auto;
   box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.modalTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .header {
@@ -67,12 +81,11 @@
 }
 
 .deleteSliderBtn {
-  background: #e04545;
   color: white;
   border: none;
-  padding: 8px 10px;
+  padding: 8px 8px;
   border-radius: 8px;
-  margin-left: 10px;
+  margin-left: 8px;
   cursor: pointer;
 }
 
@@ -107,4 +120,12 @@
   border-radius: 8px;
   color: white;
   cursor: pointer;
+}
+
+.label{
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-top: 1rem;
+  display: block;
+  color: #333;
 }
