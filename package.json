@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start"
+    "dev": "bun --bun run next dev --turbopack",
+    "build": "bun --bun run next build --turbopack",
+    "start": "bun --bun run next start",
+    "lint": "bun --bun run next lint"
   },
   "dependencies": {
     "@types/quill": "^2.0.14",

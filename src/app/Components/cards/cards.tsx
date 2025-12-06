@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { CardData } from "../data";
 import styles from "./cards.module.css";
+import Image from "next/image";
 
 interface CardProps {
   card: CardData;
@@ -12,6 +13,14 @@ interface CardProps {
 const Card = ({ card, onCategoryClick }: CardProps) => {
   const { imageUrl, category, title, description, author, date } = card;
   const placeholderImg = "https://placehold.co/600x400/222/FFF?text=Image+Error";
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const formDate = (dateString: string): string => {
+    const [year, month, day] = dateString.split("-");
+    const monthIndex = parseInt(month, 10) - 1;
+    return `${months[monthIndex]} ${parseInt(day, 10)}, ${year}`;
+  };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = placeholderImg;
@@ -26,11 +35,15 @@ const Card = ({ card, onCategoryClick }: CardProps) => {
     <div className={styles.cardWrapper}>
       <div className={styles.card}>
         <div className={styles.cardImageContainer}>
-          <img
-            className={styles.cardImage}
+          <Image
+             className={styles.cardImage}
             src={imageUrl}
             alt={title}
-            onError={handleImageError}
+            width={600}
+            height={400}
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={placeholderImg}
           />
           <div
             className={styles.cardCategory}
@@ -55,7 +68,7 @@ const Card = ({ card, onCategoryClick }: CardProps) => {
             </div>
             <div className={styles.cardDateInfo}>
               <p className={styles.cardDateLabel}>Date</p>
-              <p className={styles.cardDateValue}>{date}</p>
+              <p className={styles.cardDateValue}>{formDate(date)}</p>
             </div>
           </div>
         </div>

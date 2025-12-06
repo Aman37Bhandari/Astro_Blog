@@ -13,6 +13,7 @@ import { FaFacebookF, FaLinkedinIn, FaInstagram, FaLink } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
+import { useParams } from "next/navigation"; // ← Import useParams hook
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -87,8 +88,12 @@ function ShareButtons({ post }: { post: any }) {
   );
 }
 
-export default function BlogDetailPage({ params }: { params: { id: string } }) {
-  const post = getPost(params.id);
+export default function BlogDetailPage() {
+  const params = useParams();
+  const postId = params.id as string; 
+  
+  const post = getPost(postId);
+  
   const [isAdmin, setIsAdmin] = useState(false);
   const [editedContent, setEditedContent] = useState("");
   const [savedMessage, setSavedMessage] = useState("");
@@ -99,9 +104,12 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
     }
   }, [post]);
 
-  if (!post) notFound();
+  if (!post) {
+    notFound();
+    return null;
+  }
 
-  const currentIndex = cardsData.findIndex((p) => p.id === post!.id);
+  const currentIndex = cardsData.findIndex((p) => p.id === post.id);
   const prevPost = currentIndex > 0 ? cardsData[currentIndex - 1] : null;
   const nextPost = currentIndex < cardsData.length - 1 ? cardsData[currentIndex + 1] : null;
 
@@ -114,34 +122,34 @@ export default function BlogDetailPage({ params }: { params: { id: string } }) {
     }
   };
 
- const imageHandler = () => {
-  const input = document.createElement("input");
-  input.setAttribute("type", "file");
-  input.setAttribute("accept", "image/*");
-  input.click();
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
 
-  input.onchange = () => {
-    const file = input.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string;
-        
-        const imgHtml = `<img src="${imageUrl}" alt="Image"/>`;
-        
-        const quillInstance = (window as any).quillInstance;
-        if (quillInstance) {
-          const range = quillInstance.getSelection();
-          if (range) {
-            quillInstance.clipboard.dangerouslyPasteHTML(range.index, imgHtml);
-            quillInstance.setSelection(range.index + 1);
+    input.onchange = () => {
+      const file = input.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageUrl = e.target?.result as string;
+          
+          const imgHtml = `<img src="${imageUrl}" alt="Image"/>`;
+          
+          const quillInstance = (window as any).quillInstance;
+          if (quillInstance) {
+            const range = quillInstance.getSelection();
+            if (range) {
+              quillInstance.clipboard.dangerouslyPasteHTML(range.index, imgHtml);
+              quillInstance.setSelection(range.index + 1);
+            }
           }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
   };
-};
 
   const quillModules = {
     toolbar: {

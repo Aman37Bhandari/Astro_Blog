@@ -10,7 +10,7 @@ import 'swiper/css/autoplay';
 import { Navigation, Autoplay } from 'swiper/modules';
 
 import styles from './ImgSlider.module.css';
-import { SliderImage } from '@/app/Components/data'; 
+import { SliderImage } from '@/app/Components/data';
 interface ImageSliderProps {
   images: SliderImage[];
 }
@@ -32,10 +32,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
+            <img
+            />
             <img 
               src={image.src} 
               alt={image.alt} 
-              className={styles.sliderImage} 
+              className={styles.sliderImage}
             />
           </SwiperSlide>
         ))}

@@ -1,11 +1,13 @@
 export interface SliderImage {
   src: string;
   alt: string;
+  file?: File;
 }
 
 export interface CardData {
   id: number;
   imageUrl: string;
+  imageFile?: File;
   category: string;
   title: string;
   description: string;
@@ -17,6 +19,31 @@ export interface CardData {
   date: string;
   sliderImages?: SliderImage[];
 }
+
+export const fileToDataUrl = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+// Helper function to create a new empty card
+export const createEmptyCard = (id: number): CardData => ({
+  id,
+  imageUrl: "https://placehold.co/600x400/222/FFF?text=New+Card",
+  category: "Technology",
+  title: "New Card Title",
+  description: "Add your description here",
+  content: "<p>Start writing your content here...</p>",
+  author: {
+    name: "astroverse",
+    avatarUrl: "https://i.pravatar.cc/150?img=1",
+  },
+  date: new Date().toISOString().split('T')[0],
+  sliderImages: [],
+});
 
 export const cardsData: CardData[] = [
   {
@@ -30,7 +57,7 @@ export const cardsData: CardData[] = [
 
     sliderImages: [
       {
-        src: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071",
+        src: "https://images.unsplash.com/photo-1764877805075-c0cdcb2da65c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: "React code on screen",
       },
       {
@@ -57,7 +84,7 @@ export const cardsData: CardData[] = [
       name: "Jane Doe",
       avatarUrl: "https://i.pravatar.cc/150?img=1",
     },
-    date: "Sep 10, 2025",
+    date: "22-10-2025",
   },
 
   {
@@ -75,7 +102,7 @@ export const cardsData: CardData[] = [
       name: "John Smith",
       avatarUrl: "https://i.pravatar.cc/150?img=2",
     },
-    date: "Sep 12, 2025",
+    date: "22-12-2025",
   },
 
   {
@@ -94,7 +121,7 @@ export const cardsData: CardData[] = [
       avatarUrl:
         "https://i.pravatar.cc/150?img=2",
     },
-    date: "Sep 12, 2025",
+    date: "2025-11-22",
   },
 
   {
@@ -113,7 +140,7 @@ export const cardsData: CardData[] = [
       avatarUrl:
         "https://i.pinimg.com/736x/4c/02/bf/4c02bff3445d2d5ed9c86cd112f88918.jpg",
     },
-    date: "Sep 12, 2025",
+    date: "12-10-2021",
   },
 
   {
@@ -131,7 +158,7 @@ export const cardsData: CardData[] = [
       name: "Alice Green",
       avatarUrl: "https://i.pravatar.cc/150?img=11",
     },
-    date: "Oct 01, 2025",
+    date: "2021-10-10",
   },
 
   {
@@ -148,6 +175,6 @@ export const cardsData: CardData[] = [
       name: "David Clark",
       avatarUrl: "https://i.pravatar.cc/150?img=12",
     },
-    date: "Oct 02, 2025",
+    date: "2025-12-12",
   },
 ];
