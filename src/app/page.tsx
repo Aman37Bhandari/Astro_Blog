@@ -30,15 +30,19 @@ export default function Home() {
   });
 
   const [editCard, setEditCard] = useState<CardData | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
-  const [addCard, setAddCard] = useState<CardData | null>(null);
+  const handleUpdateCard = (updatedCard: CardData) => {
+    setAllCards((prev) =>
+      prev.map((c) => (c.id === updatedCard.id ? updatedCard : c))
+    );
+    setEditCard(null);
+  };
 
-const handleUpdateCard = (updatedCard: CardData) => {
-  setAllCards(prev =>
-    prev.map(c => (c.id === updatedCard.id ? updatedCard : c))
-  );
-  setEditCard(null);
-};
+  const handleAddCard = (newCard: CardData) => {
+    setAllCards((prev) => [...prev, newCard]);
+    setShowAddModal(false); // Close modal after saving
+  };
 
   const handleTrashClick = (id: number) => setConfirmDeleteId(id);
   const handleCancelDelete = () => setConfirmDeleteId(null);
@@ -48,6 +52,7 @@ const handleUpdateCard = (updatedCard: CardData) => {
     setConfirmDeleteId(null);
   };
 
+  const nextId = allCards.length > 0 ? Math.max(...allCards.map((c) => c.id)) + 1 : 1;
 
   return (
     <div className={styles.page}>
@@ -88,10 +93,7 @@ const handleUpdateCard = (updatedCard: CardData) => {
                     </>
                   ) : (
                     <>
-                      <Edit
-                        size={22}
-                        onClick={() => setEditCard(card)}
-                      />
+                      <Edit size={22} onClick={() => setEditCard(card)} />
                       <Trash
                         size={22}
                         onClick={() => handleTrashClick(card.id)}
@@ -109,19 +111,35 @@ const handleUpdateCard = (updatedCard: CardData) => {
             <p>No results found.</p>
           )}
 
-          <div className={styles.addBlog} >
+          {/* Trigger to open Add Modal */}
+          <div 
+            className={styles.addBlog} 
+            onClick={() => setShowAddModal(true)}
+            style={{ cursor: "pointer" }}
+          >
             <Plus className={styles.sign} strokeWidth={3} />
           </div>
         </div>
-        {editCard && (
-  <EditModal
-    card={editCard}
-    categories={categories}
-    onSave={handleUpdateCard}
-    onClose={() => setEditCard(null)}
-  />
-)}
 
+        {/* Edit Modal */}
+        {editCard && (
+          <EditModal
+            card={editCard}
+            categories={categories}
+            onSave={handleUpdateCard}
+            onClose={() => setEditCard(null)}
+          />
+        )}
+
+        {/* Add Modal */}
+        {showAddModal && (
+          <AddCardModal
+            categories={categories}
+            onSave={handleAddCard}
+            onClose={() => setShowAddModal(false)}
+            nextId={nextId}
+          />
+        )}
       </main>
     </div>
   );

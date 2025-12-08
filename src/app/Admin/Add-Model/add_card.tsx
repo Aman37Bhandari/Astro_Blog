@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./add_card.module.css";
-import { CardData } from "../../Components/data";
+import { CardData, fileToDataUrl } from "../../Components/data";
 
 interface Props {
   categories: string[];
@@ -20,15 +20,28 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
     description: "",
     content: "<p></p>",
     author: {
-      name: "",
+      name: "astroverse",
       avatarUrl: "https://i.pravatar.cc/150?img=1"
     },
     date: new Date().toISOString().split('T')[0],
     sliderImages: []
   });
 
+  const [mainImagePreview, setMainImagePreview] = useState<string>("");
+  const [sliderPreviews, setSliderPreviews] = useState<string[]>([]);
+
   const updateField = (field: keyof CardData, value: any) => {
     setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const dataUrl = await fileToDataUrl(file);
+      setMainImagePreview(dataUrl);
+      updateField("imageUrl", dataUrl);
+      updateField("imageFile", file);
+    }
   };
 
   const handleSliderChange = (index: number, key: "src" | "alt", value: string) => {
@@ -37,17 +50,41 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
     updateField("sliderImages", updated);
   };
 
+  const handleSliderImageUpload = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const dataUrl = await fileToDataUrl(file);
+      const updated = [...(form.sliderImages ?? [])];
+      updated[index] = { ...updated[index], src: dataUrl, file };
+      updateField("sliderImages", updated);
+      
+      const newPreviews = [...sliderPreviews];
+      newPreviews[index] = dataUrl;
+      setSliderPreviews(newPreviews);
+    }
+  };
+
   const handleAddSlider = () => {
     updateField("sliderImages", [
       ...(form.sliderImages ?? []),
       { src: "", alt: "" }
     ]);
+    setSliderPreviews([...sliderPreviews, ""]);
+  };
+
+  const handleDeleteSlider = (index: number) => {
+    const updated = [...(form.sliderImages ?? [])];
+    updated.splice(index, 1);
+    updateField("sliderImages", updated);
+    
+    const newPreviews = [...sliderPreviews];
+    newPreviews.splice(index, 1);
+    setSliderPreviews(newPreviews);
   };
 
   const handleSave = () => {
-    // Basic validation
     if (!form.title.trim() || !form.description.trim() || !form.imageUrl.trim()) {
-      alert("Please fill in all required fields (Title, Description, and Front Image URL)");
+      alert("Please fill in all required fields (Title, Description, and Front Image)");
       return;
     }
     onSave(form);
@@ -56,6 +93,7 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
+        <button className={styles.closeBtn} onClick={onClose}>❌</button>
         <h2 className={styles.modalTitle}>Add New Card</h2>
 
         <label className={styles.label}>Category *</label>
@@ -106,24 +144,25 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
           placeholder="Enter card description"
         />
 
-        <label className={styles.label}>Thumbnail</label>
+        <label className={styles.label}>Thumbnail *</label>
+        {mainImagePreview && (
+          <img 
+            src={mainImagePreview} 
+            alt="Preview" 
+            style={{ 
+              width: '100%', 
+              maxHeight: '200px', 
+              objectFit: 'cover', 
+              borderRadius: '8px', 
+              marginBottom: '10px' 
+            }} 
+          />
+        )}
         <input
           className={styles.formField}
           type="file"
-          value={form.imageUrl}
           accept="image/*"
-          onChange={(e) => updateField("imageUrl", e.target.value)}
-          placeholder="https://example.com/image.jpg"
-          required
-        />
-
-        <label className={styles.label}>Content (HTML)</label>
-        <textarea
-          className={styles.formField}
-          value={form.content}
-          onChange={(e) => updateField("content", e.target.value)}
-          placeholder="<p>Your content here...</p>"
-          rows={4}
+          onChange={handleMainImageUpload}
         />
 
         <label className={styles.label}>Slider Images (Optional)</label>
@@ -131,14 +170,24 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
         {(form.sliderImages ?? []).map((img, i) => (
           <div key={i} className={styles.sliderItem}>
             <div className={styles.sliderInputs}>
+              {sliderPreviews[i] && (
+                <img 
+                  src={sliderPreviews[i]} 
+                  alt="Slider preview" 
+                  style={{ 
+                    width: '100%', 
+                    maxHeight: '150px', 
+                    objectFit: 'cover', 
+                    borderRadius: '8px', 
+                    marginBottom: '8px' 
+                  }} 
+                />
+              )}
               <input
                 className={styles.formField}
-                type="text"
-                placeholder="Image src"
-                value={img.src}
-                onChange={(e) =>
-                  handleSliderChange(i, "src", e.target.value)
-                }
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleSliderImageUpload(i, e)}
               />
               <input
                 className={styles.formField}
@@ -153,13 +202,9 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
 
             <button
               className={styles.deleteSliderBtn}
-              onClick={() => {
-                const updated = [...(form.sliderImages ?? [])];
-                updated.splice(i, 1);
-                updateField("sliderImages", updated);
-              }}
+              onClick={() => handleDeleteSlider(i)}
             >
-              ✌
+              ❌
             </button>
           </div>
         ))}
@@ -170,7 +215,7 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
 
         <div className={styles.actions}>
           <button className={styles.saveBtn} onClick={handleSave}>Add Card</button>
-          <button className={styles.closeBtn} onClick={onClose}>✌</button>
+          <button className={styles.cancelBtn} onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>

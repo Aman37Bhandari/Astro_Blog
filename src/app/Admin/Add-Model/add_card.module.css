@@ -1,0 +1,132 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99999;
+}
+
+.modal {
+  width: 650px;
+  background: #a89f9f;
+  border-radius: 12px;
+  padding: 22px 28px;
+  position: relative;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.modalTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.header {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #555;
+}
+
+.formLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+.formField {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  outline: none;
+  margin-bottom: 18px;
+}
+
+.sliderItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sliderInputs {
+  flex: 1;
+}
+
+.deleteSliderBtn {
+  color: white;
+  border: none;
+  padding: 8px 8px;
+  border-radius: 8px;
+  margin-left: 8px;
+  margin-bottom: 18px;
+  cursor: pointer;
+}
+
+.addBtn {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.saveBtn {
+  background: #007bff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background: #555;
+  padding: 10px 22px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.label{
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-top: 1rem;
+  display: block;
+  color: #333;
+}
