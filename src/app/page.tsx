@@ -7,6 +7,7 @@ import { Navbar } from "./Components/navbar/navbar";
 import { Card } from "./Components/cards/cards";
 import { cardsData, CardData } from "./Components/data";
 import EditModal from "./Admin/Edit-Model/edit_card";
+import AddCardModal from "./Admin/Add-Model/add_card";
 import Link from "next/link";
 import TopStoriesTicker from "./Components/topStories/TopStories";
 import Filters from "./Components/Filter/Filter";
@@ -29,6 +30,8 @@ export default function Home() {
   });
 
   const [editCard, setEditCard] = useState<CardData | null>(null);
+
+  const [addCard, setAddCard] = useState<CardData | null>(null);
 
 const handleUpdateCard = (updatedCard: CardData) => {
   setAllCards(prev =>
@@ -106,7 +109,7 @@ const handleUpdateCard = (updatedCard: CardData) => {
             <p>No results found.</p>
           )}
 
-          <div className={styles.addBlog}>
+          <div className={styles.addBlog} >
             <Plus className={styles.sign} strokeWidth={3} />
           </div>
         </div>

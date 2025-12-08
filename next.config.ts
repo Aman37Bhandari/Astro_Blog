@@ -1,26 +1,36 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    optimizePackageImports: ['lucide-react', 'react-icons'],
-  },
-  
-  images: {
-    domains: [
-      'images.unsplash.com',
-      'i.pravatar.cc',
-      'i.pinimg.com',
-      'api.dicebear.com',
-      'placehold.co'
-    ],
-    formats: ['image/avif', 'image/webp'],
-  },
 
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+  images: {
+    unoptimized: process.env.NEXT_PUBLIC_DEPLOYMENT === "development",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "i.pinimg.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
-  
-  swcMinify: true,
 };
 
 export default nextConfig;
