@@ -84,7 +84,7 @@ const AddCardModal: React.FC<Props> = ({ categories, onSave, onClose, nextId }) 
 
   const handleSave = () => {
     if (!form.title.trim() || !form.description.trim() || !form.imageUrl.trim()) {
-      alert("Please fill in all required fields (Title, Description, and Front Image)");
+      alert("Please fill in all required fields");
       return;
     }
     onSave(form);
