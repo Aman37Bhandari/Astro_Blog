@@ -10,7 +10,6 @@ export default function TopStoriesTicker() {
       <div className={styles.topStoriesLabel}><p>●</p> Top Stories</div>
 
       <div className={styles.tickerTrack}>
-        {/* Repeat stories twice for seamless loop */}
         <div className={styles.tickerContent}>
           {cardsData.concat(cardsData).map((story, index) => (
             <Link
