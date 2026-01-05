@@ -1,0 +1,26 @@
+[
+  {
+    "icon": "facebook",
+    "color": "var(--color4)",
+    "title": "Share on Facebook",
+    "href": "https://www.facebook.com/sharer/sharer.php?u={{url}}"
+  },
+  {
+    "icon": "x",
+    "color": "var(--color5)",
+    "title": "Share on X",
+    "href": "https://twitter.com/intent/tweet?url={{url}}&text={{title}}"
+  },
+  {
+    "icon": "linkedin",
+    "color": "var(--color6)",
+    "title": "Share on LinkedIn",
+    "href": "https://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}"
+  },
+  {
+    "icon": "instagram",
+    "color": "var(--color7)",
+    "title": "Share on Instagram",
+    "href": "https://www.instagram.com/"
+  }
+]

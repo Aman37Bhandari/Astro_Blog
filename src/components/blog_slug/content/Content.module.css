@@ -1,0 +1,36 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: var(--windowWidth);
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-family: "Red Hat Display";
+  font-size: var(--fontSize);
+  line-height: calc(var(--fontSize) + 8px);
+  color: var(--foreground);
+  font-weight: 500;
+  gap: 10px;
+}
+
+.content img {
+  border-radius: 10px;
+}
+
+.lastUpdated {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: right;
+  width: var(--windowWidth);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: var(--secondary);
+  font-weight: 400;
+  margin-bottom: 30px;
+}

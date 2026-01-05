@@ -1,0 +1,63 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: var(--windowWidth);
+  gap: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.comments h2 {
+  text-transform: uppercase;
+}
+
+.comments_comment {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: calc(var(--windowWidth) - 20px);
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--borders);
+  border-radius: 10px;
+}
+
+.comments_comment_author {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  gap: 10px;
+}
+
+.comments_comment_author span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(var(--fontSize) + 12px);
+  height: calc(var(--fontSize) + 12px);
+  border-radius: 50%;
+  border: 2px solid var(--borders);
+  background-color: var(--secondary);
+  color: var(--background);
+  font-weight: 800;
+  font-size: calc(var(--fontSize) + 2px);
+  text-transform: uppercase;
+}
+
+.comments_comment_author p {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.comments_comment pre {
+  width: calc(var(--windowWidth) - 20px);
+  font-size: var(--fontSize);
+  color: var(--foreground);
+  text-align: left;
+}

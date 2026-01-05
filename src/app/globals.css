@@ -1,0 +1,120 @@
+:root {
+  --windowWidth: calc(100dvw * 95 / 100);
+  --fontSize: 12px;
+  --background: rgb(247, 247, 247);
+  --foreground: rgb(26, 26, 26);
+  --secondary: rgb(74, 74, 74);
+  --borders: rgb(225, 225, 225);
+  --color1: rgb(27, 187, 255);
+  --color2: rgb(255, 65, 65);
+  --color3: rgb(16, 111, 254);
+  --color4: #1877f2;
+  --color5: #000;
+  --color6: #0a66c2;
+  --color7: #f35c8e;
+  --color8: #5ce6b4;
+  --rgbColorBg: 247, 247, 247;
+  --rgbColorFg: 26, 26, 26;
+  --rgbColorSc: 74, 74, 74;
+  --rgbColorBr: 225, 225, 225;
+  --rgbColor1: 27, 187, 255;
+  --rgbColor2: 255, 65, 65;
+  --rgbColor3: 16, 111, 254;
+}
+
+@media only screen and (min-width: 1024px) {
+  :root {
+    --windowWidth: calc(100dvw * 90 / 100);
+    --fontSize: 13px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  :root {
+    --windowWidth: calc(1440px * 90 / 100);
+  }
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("/fonts/red-hat-display.ttf");
+}
+
+@font-face {
+  font-family: "Mokoto Glitch";
+  src: url("/fonts/mokoto-glitch.otf");
+}
+
+* {
+  transition: all 0.3s ease-in-out;
+  font-family: "Red Hat Display";
+  font-size: var(--fontSize);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  min-width: 100dvw;
+  max-width: 100dvw;
+  overflow-x: hidden !important;
+  min-height: 100dvh;
+  max-height: fit-content;
+  padding: 0px;
+  margin: 0px;
+}
+
+a,
+a:hover,
+a:link,
+a:active {
+  color: unset;
+  text-decoration: unset;
+}
+
+button,
+input,
+textarea,
+p,
+pre,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+  padding: 0px;
+}
+
+hr {
+  border: none;
+  margin: none;
+  padding: none;
+  background-color: var(--borders);
+  height: 1px;
+}
+
+h1 {
+  font-size: calc(var(--fontSize) + 20px);
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+h2 {
+  font-size: calc(var(--fontSize) + 10px);
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+h3 {
+  font-size: calc(var(--fontSize) + 2px);
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+pre {
+  white-space: wrap;
+}
