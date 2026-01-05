@@ -105,8 +105,8 @@
   height: 63%;
   z-index: 100;
   background: linear-gradient(
-    rgba(255, 255, 255, 0.321),
-    rgba(89, 200, 208, 0.662)
+    rgba(0, 0, 0, 0.596),
+    rgba(0, 48, 115, 0.662)
   );
   backdrop-filter: blur(30px) saturate(130%);
   -webkit-backdrop-filter: blur(30px) saturate(130%);
@@ -134,10 +134,6 @@
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.25),
-      rgba(89, 200, 208, 0.6)
-    );
     backdrop-filter: blur(35px) saturate(140%);
     -webkit-backdrop-filter: blur(35px) saturate(140%);
   }
@@ -147,7 +143,7 @@
   }
 
   .tagline h1 {
-    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-size: clamp(1.5rem, 1vw, 1.5rem);
   }
 
   .moon {
@@ -161,6 +157,10 @@
   .layer_0 {
     object-fit: cover;
     object-position: center center;
+  }
+
+  .layer_7{
+    visibility: hidden;
   }
 }
 
@@ -184,26 +184,23 @@
     width: 90%;
     max-width: 400px;
     height: auto;
-    min-height: 550px;
+    min-height: 450px;
     max-height: 85vh;
     overflow-y: auto;
     z-index: 100;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.18),
-      rgba(89, 200, 208, 0.5)
-    );
     backdrop-filter: blur(40px) saturate(150%);
     -webkit-backdrop-filter: blur(40px) saturate(150%);
   }
 
   .tagline {
-    top: 8%;
+    top: 5%;
     white-space: normal;
     z-index: 25;
+    width: 90%;
   }
 
   .tagline h1 {
-    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
     white-space: normal;
   }
 
@@ -227,9 +224,14 @@
 }
 
 @media (max-width: 480px) {
+
+  .layer_7{
+    visibility: hidden;
+  }
+
   .blackHole {
     position: absolute;
-    top: 0;
+    top: -10%;
     left: 0;
     width: 100%;
     height: 100%;
@@ -237,23 +239,21 @@
   }
 
   .login {
-    width: 95%;
-    min-height: 500px;
+    width: 93%;
+    min-height: 450px;
     padding: 10px;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.15),
-      rgba(89, 200, 208, 0.45)
-    );
+    top:50%;
     backdrop-filter: blur(45px) saturate(160%);
     -webkit-backdrop-filter: blur(45px) saturate(160%);
   }
 
   .tagline {
     top: 5%;
+    width: 90%;
   }
 
   .tagline h1 {
-    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-size: clamp(1rem, 3vw, 1rem);
   }
 
   .layer_7 {
@@ -262,9 +262,11 @@
   }
 
   .layer_0 {
-    height: 35vh;
+    height: 40vh;
     min-height: 200px;
+    overflow: hidden;
   }
+
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
